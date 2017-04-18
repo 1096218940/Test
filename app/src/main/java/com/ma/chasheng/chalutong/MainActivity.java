@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 
 import com.ma.chasheng.chalutong.base.BaseActivity;
 import com.ma.chasheng.chalutong.ui.fragment.CarFragment;
+import com.ma.chasheng.chalutong.ui.fragment.HomeFragment;
 import com.ma.chasheng.chalutong.ui.fragment.MessageFragment;
 
 import butterknife.BindView;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseActivity {
                 replaceFragment(R.id.fl_container,new CarFragment(),"Car");
                 break;
             case R.id.rb_3:
-                replaceFragment(R.id.fl_container,new MessageFragment(),"Msg2");
+                replaceFragment(R.id.fl_container,new HomeFragment(),"home");
                 break;
             case R.id.rb_4:
                 replaceFragment(R.id.fl_container,new CarFragment(),"Car2");
