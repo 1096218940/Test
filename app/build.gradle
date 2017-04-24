@@ -12,7 +12,7 @@ android {
     }
     defaultConfig {
         applicationId "com.ma.chasheng.chalutong"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -31,15 +31,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    // butterknife
-    //glide
-    //retrofit
-    //rxjava
-    //okhttp
-    //dagger
-    //adapter
-    //dialog
-    //加载动画库
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:8.2.1'
@@ -57,6 +48,7 @@ dependencies {
     compile 'com.github.ybq:Android-SpinKit:1.0.4'
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.github.hss01248:PhotoOut:1.0.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     apt 'com.google.dagger:dagger-compiler:2.10'
