@@ -20,4 +20,13 @@ public class MyApp extends Application {
         mContext=getApplicationContext();
         ToastUtils.init(mContext);
     }
+
+
+    /**
+     * @return
+     * 全局的上下文
+     */
+    public static Context getmContext() {
+        return mContext;
+    }
 }

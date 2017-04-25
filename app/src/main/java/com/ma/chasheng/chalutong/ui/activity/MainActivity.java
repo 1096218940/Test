@@ -1,25 +1,46 @@
 package com.ma.chasheng.chalutong.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ma.chasheng.chalutong.utils.BuilderManger;
 import com.ma.chasheng.chalutong.R;
+import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseActivity;
+import com.ma.chasheng.chalutong.base.IBasePresenter;
+import com.ma.chasheng.chalutong.base.IBaseView;
+import com.ma.chasheng.chalutong.servrce.Http;
+import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
+import com.ma.chasheng.chalutong.utils.BuilderManger;
 import com.ma.chasheng.chalutong.utils.ToastUtils;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.OnBoomListener;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity implements  NavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.rv_news_list)
+    RecyclerView mRecyclerview;
     private BoomMenuButton bmb;
 
+    private RecommendListAdapter adapter;
+    private List<RecommendListBean.ResultBean> dataList;
     @Override
     protected int attachLayoutRes() {
         return R.layout.activity_main;
@@ -32,7 +53,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void initViews() {
-
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,6 +67,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         initBmb();
+
+        httpRequest();
+
+        dataList=new ArrayList<>();
+        adapter=new RecommendListAdapter(R.layout.item_home_list,dataList);
+        mRecyclerview.setAdapter(adapter);
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    //网络请求
+    private void httpRequest() {
+
+
     }
 
     private void initBmb() {
@@ -62,25 +97,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onClicked(int index, BoomButton boomButton) {
                 switch (index) {
                     case 0:
-                       ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 1:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 2:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 3:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 4:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 5:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
                     case 6:
-                        ToastUtils.showToast(index+"T");
+                        ToastUtils.showToast(index + "T");
                         break;
 
                     default:

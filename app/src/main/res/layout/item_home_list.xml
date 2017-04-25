@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="10dp"
+    android:paddingTop="16dp"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_centerHorizontal="true"
+        android:layout_width="372px"
+        android:layout_height="372px" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/style_main_mid_gd_text"
+        android:layout_width="350px"
+        android:layout_below="@id/img"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="6.4dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="2"
+        android:text="美食名称美食名称美食名称美食名称美"
+        android:textColor="#101010"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_type1"
+        style="@style/style_main_mid_gd_text"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="6.4dp"
+        android:layout_marginTop="6dp"
+        android:text="￥"
+        android:textColor="#c90439"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_new"
+        style="@style/style_main_mid_gd_text"
+        android:layout_alignBottom="@id/tv_type1"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@id/tv_type1"
+        android:text="88"
+        android:textColor="#c90439"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_old"
+        style="@style/style_main_mid_gd_text"
+        android:layout_alignBottom="@id/tv_type1"
+        android:layout_marginLeft="11.9dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@id/tv_new"
+        android:text="￥88"
+        android:textColor="#808080"
+        android:textSize="12sp" />
+
+</RelativeLayout>
