@@ -1,60 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ma.chasheng.chalutong.MainActivity">
+    tools:context="com.ma.chasheng.chalutong.ui.activity.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- 遮挡状态栏透明的部分 -->
-    <TextView
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_margin_top"
-        android:background="?attr/colorPrimary"/>
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:fitsSystemWindows="true"
-        android:clipToPadding="true"
-        android:layout_above="@+id/radioGroup"
-        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-
-        >
-    </FrameLayout>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:orientation="horizontal"
-      >
-
-        <RadioButton
-            android:id="@+id/rb_1"
-            android:drawableTop="@drawable/bg_rb1"
-            android:text="@string/rb_tv"
-            style="@style/rb_style" />
-
-        <RadioButton
-            android:id="@+id/rb_2"
-            android:drawableTop="@drawable/bg_rb2"
-            style="@style/rb_style"
-            android:text="信息" />
-
-        <RadioButton
-            android:id="@+id/rb_3"
-            android:drawableTop="@drawable/bg_rb3"
-            style="@style/rb_style"
-            android:text="购物车" />
-
-        <RadioButton
-            android:id="@+id/rb_4"
-            android:drawableTop="@drawable/bg_rb4"
-            style="@style/rb_style"
-            android:text="我的" />
-
-    </RadioGroup>
-
-
-
-</RelativeLayout>
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+</android.support.v4.widget.DrawerLayout>

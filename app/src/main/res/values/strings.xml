@@ -7,4 +7,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_content">何为约束，即控件之间的关系。  它能让你的布局更加扁平化，一般来说一个界面一层就够了；同时借助于AS我们能极其简单的完成界面布局。</string>
+    <string name="action_settings">setting</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
 </resources>

@@ -52,4 +52,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     apt 'com.google.dagger:dagger-compiler:2.10'
+    compile 'com.nightonke:boommenu:2.0.9'
+    compile 'com.android.support:percent:24.2.1'
 }
