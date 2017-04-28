@@ -5,4 +5,5 @@ package com.ma.chasheng.chalutong.ui;
  */
 
 public class demo {
+    private String str="hello android";
 }
