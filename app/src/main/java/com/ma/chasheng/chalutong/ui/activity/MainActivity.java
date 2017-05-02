@@ -12,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ma.chasheng.chalutong.R;
+import com.ma.chasheng.chalutong.api.ApiService;
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseActivity;
 import com.ma.chasheng.chalutong.base.IBasePresenter;
 import com.ma.chasheng.chalutong.base.IBaseView;
+import com.ma.chasheng.chalutong.http.HttpService;
 import com.ma.chasheng.chalutong.servrce.Http;
 import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
 import com.ma.chasheng.chalutong.utils.BuilderManger;
@@ -41,6 +43,9 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
     private RecommendListAdapter adapter;
     private List<RecommendListBean.ResultBean> dataList;
+
+    private ApiService apiService;
+
     @Override
     protected int attachLayoutRes() {
         return R.layout.activity_main;
@@ -79,6 +84,9 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
     //网络请求
     private void httpRequest() {
+        apiService= HttpService.getApiService();
+        apiService.showList(1)
+                .compose()
 
 
     }

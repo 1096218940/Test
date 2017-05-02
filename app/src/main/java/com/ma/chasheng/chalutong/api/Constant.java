@@ -6,6 +6,5 @@ package com.ma.chasheng.chalutong.api;
  */
 
 public class Constant {
-
     public static final String IMG_PATH = "http://106.14.37.244";
 }
