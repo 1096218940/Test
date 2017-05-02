@@ -1,6 +1,8 @@
 package com.ma.chasheng.chalutong.base;
 
 
+import android.view.View;
+
 import com.ma.chasheng.chalutong.widget.EmptyLayout;
 
 /**
@@ -12,7 +14,7 @@ public interface IBaseView {
     /**
      * 显示加载动画
      */
-    void showLoading();
+    void showLoading(String msg);
 
     /**
      * 隐藏加载
@@ -21,9 +23,12 @@ public interface IBaseView {
 
     /**
      * 显示网络错误
-     * @param onRetryListener 点击监听
+     *
      */
-    void showNetError(EmptyLayout.OnRetryListener onRetryListener);
+    void showNetError(String msg);
+
+
+    void showNetError(String msg, View.OnClickListener onClickListener);
 
     /**
      * 绑定生命周期
@@ -32,8 +37,5 @@ public interface IBaseView {
      */
    // <T> LifecycleTransformer<T> bindToLife();
 
-    /**
-     * 完成刷新, 新增控制刷新
-     */
-    void finishRefresh();
+
 }

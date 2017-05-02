@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 import com.example.gs.mvpdemo.ProApplication;
-import com.ma.chasheng.chalutong.MyApp;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +21,7 @@ public class SpUtils {
      * 保存在手机里面的文件名
      */
     public static final String FILE_NAME ="123";
-    static Context context = MyApp.getmContext();
+   static Context context = ProApplication.getmContext();
 
     /**
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

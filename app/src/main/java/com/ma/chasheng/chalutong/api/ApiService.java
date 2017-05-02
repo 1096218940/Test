@@ -2,10 +2,12 @@ package com.ma.chasheng.chalutong.api;
 
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseHttpResult;
+import com.ma.chasheng.chalutong.model.News;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
+
 
 /**
  * Created by mapingan
@@ -16,4 +18,9 @@ public interface ApiService {
 
     @GET("indexapi/indexGoods")
     Observable<BaseHttpResult<RecommendListBean>> showList(@Query("pageNo")int pagNo);
+
+
+    //    科技新闻：
+    @GET("keji/")
+    Observable<News> getNewsDatas(@Query("key") String key, @Query("num") String num, @Query("page") int page);
 }

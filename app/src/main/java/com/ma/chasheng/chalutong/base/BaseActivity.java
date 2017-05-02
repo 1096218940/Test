@@ -1,5 +1,6 @@
 package com.ma.chasheng.chalutong.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ma.chasheng.chalutong.R;
 import com.ma.chasheng.chalutong.utils.SwipeRefreshHelper;
@@ -25,103 +27,13 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/4/14 0014.
  */
 
-public  abstract class BaseActivity <T extends IBasePresenter>extends AppCompatActivity implements IBaseView{
-    /**
-     * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
-     */
-    @Nullable
-    @BindView(R.id.empty_layout)
-    protected EmptyLayout mEmptyLayout;
-    /**
-     * 把 Presenter 提取到基类需要配合基类的 initInjector() 进行注入，如果继承这个基类则必定要提供一个 Presenter 注入方法，
-     * 该APP所有 Presenter 都是在 Module 提供注入实现，也可以选择提供另外不带 Presenter 的基类
-     */
-    @Inject
-    protected T mPresenter;
-    /**
-     * 刷新控件，注意，资源的ID一定要一样
-     */
-    @Nullable
-    @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefresh;
+public  class BaseActivity extends AppCompatActivity implements IBaseView{
 
-    /**
-     * 绑定布局文件
-     *
-     * @return 布局文件ID
-     */
-    @LayoutRes
-    protected abstract int attachLayoutRes();
-
-    /**
-     * Dagger 注入
-     */
-    protected abstract void initInjector();
-
-    /**
-     * 初始化视图控件
-     */
-    protected abstract void initViews();
-
-    /**
-     * 更新视图控件
-     */
-    protected abstract void updateViews(boolean isRefresh);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(attachLayoutRes());
-        ButterKnife.bind(this);
-        initInjector();
-        initViews();
-        initSwipeRefresh();
-        updateViews(false);
-    }
-
-
-    @Override
-    public void showLoading() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
-        }
-    }
-
-    @Override
-    public void hideLoading() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.hide();
-        }
-    }
-
-    @Override
-    public void showNetError(EmptyLayout.OnRetryListener onRetryListener) {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
-            mEmptyLayout.setRetryListener(onRetryListener);
-        }
-    }
-
-    @Override
-    public void finishRefresh() {
-        if (mSwipeRefresh != null) {
-            mSwipeRefresh.setRefreshing(false);
-        }
-    }
-
-
-    /**
-     * 初始化下拉刷新
-     */
-    private void initSwipeRefresh() {
-        if (mSwipeRefresh != null) {
-            SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    updateViews(true);
-                }
-            });
-        }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
@@ -184,4 +96,32 @@ public  abstract class BaseActivity <T extends IBasePresenter>extends AppCompatA
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void showLoading(String msg) {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showNetError(String msg) {
+
+    }
+
+    @Override
+    public void showNetError(String msg, View.OnClickListener onClickListener) {
+
+    }
+
+    @Override
+    public void finishRefresh() {
+
+    }
+
+    protected <T extends View> T $(View view,int id) {
+        return (T) view.findViewById(id);
+    }
 }

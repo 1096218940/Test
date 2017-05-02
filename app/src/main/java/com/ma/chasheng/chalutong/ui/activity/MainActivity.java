@@ -1,6 +1,7 @@
 package com.ma.chasheng.chalutong.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,14 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ma.chasheng.chalutong.R;
-import com.ma.chasheng.chalutong.api.ApiService;
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseActivity;
-import com.ma.chasheng.chalutong.base.IBasePresenter;
-import com.ma.chasheng.chalutong.base.IBaseView;
-import com.ma.chasheng.chalutong.http.HttpService;
-import com.ma.chasheng.chalutong.servrce.Http;
 import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
+import com.ma.chasheng.chalutong.ui.fragment.home.HomeFragment;
 import com.ma.chasheng.chalutong.utils.BuilderManger;
 import com.ma.chasheng.chalutong.utils.ToastUtils;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
@@ -29,8 +26,6 @@ import com.nightonke.boommenu.OnBoomListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,21 +39,14 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
     private RecommendListAdapter adapter;
     private List<RecommendListBean.ResultBean> dataList;
 
-    private ApiService apiService;
+
 
     @Override
-    protected int attachLayoutRes() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initInjector() {
-
-    }
-
-    @Override
-    protected void initViews() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,22 +61,12 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
         initBmb();
 
-        httpRequest();
+
 
         dataList=new ArrayList<>();
         adapter=new RecommendListAdapter(R.layout.item_home_list,dataList);
         mRecyclerview.setAdapter(adapter);
         mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-
-    }
-
-    //网络请求
-    private void httpRequest() {
-        apiService= HttpService.getApiService();
-        apiService.showList(1)
-                .compose()
-
-
     }
 
     private void initBmb() {
@@ -105,6 +83,7 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
             public void onClicked(int index, BoomButton boomButton) {
                 switch (index) {
                     case 0:
+                        addFragment(R.id.include,new HomeFragment(),"home");
                         ToastUtils.showToast(index + "T");
                         break;
                     case 1:
@@ -159,10 +138,6 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
     }
 
-    @Override
-    protected void updateViews(boolean isRefresh) {
-
-    }
 
     @Override
     public void onBackPressed() {
