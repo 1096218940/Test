@@ -17,46 +17,26 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class CarFragment extends BaseFragment<IBasePresenter> implements IBaseView {
+public class CarFragment extends BaseFragment implements IBaseView {
 
-
-    @BindView(R.id.tool_bar)
-    Toolbar mToolBar;
-    @BindView(R.id.rv_car)
-    RecyclerView mRecyclerView;
-    Unbinder unbinder;
 
     @Override
-    protected int attachLayoutRes() {
-        return R.layout.fragment_car;
-    }
-
-    @Override
-    protected void initInjector() {
+    public void showLoading(String msg) {
 
     }
 
     @Override
-    protected void initViews() {
-        initToolBar(mToolBar,true,"购物车");
-    }
-
-    @Override
-    protected void updateViews(boolean isRefresh) {
+    public void hideLoading() {
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void showNetError(String msg) {
+
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void showNetError(String msg, View.OnClickListener onClickListener) {
+
     }
 }

@@ -1,15 +1,16 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.ma.chasheng.chalutong.ui.fragment.home.HomeFragment"
   >
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/easy_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></com.jude.easyrecyclerview.EasyRecyclerView>
 
-</RelativeLayout>
+</LinearLayout>

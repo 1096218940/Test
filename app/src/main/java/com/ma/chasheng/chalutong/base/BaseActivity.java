@@ -17,6 +17,8 @@ import com.ma.chasheng.chalutong.R;
 import com.ma.chasheng.chalutong.utils.SwipeRefreshHelper;
 import com.ma.chasheng.chalutong.widget.EmptyLayout;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -87,6 +89,28 @@ public  class BaseActivity extends AppCompatActivity implements IBaseView{
         }
     }
 
+
+    protected void showContentFragment(BaseFragment to, int container) {
+        if (to != null) {
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            if (to.isAdded()) {
+                t.show(to);
+            } else {
+                t.add(container, to, to.getClass().getSimpleName());
+            }
+            List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            if (fragments == null) {
+                t.commit();
+                return;
+            }
+            for (Fragment fragment : fragments) {
+                if (fragment != to && !fragment.isHidden()) {
+                    t.hide(fragment);
+                }
+            }
+            t.commit();
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -116,10 +140,7 @@ public  class BaseActivity extends AppCompatActivity implements IBaseView{
 
     }
 
-    @Override
-    public void finishRefresh() {
 
-    }
 
     protected <T extends View> T $(View view,int id) {
         return (T) view.findViewById(id);

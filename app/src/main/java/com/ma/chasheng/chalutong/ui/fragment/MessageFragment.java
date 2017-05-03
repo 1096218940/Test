@@ -16,26 +16,26 @@ import com.ma.chasheng.chalutong.base.IBaseView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessageFragment extends BaseFragment<IBasePresenter> implements IBaseView {
+public class MessageFragment extends BaseFragment implements IBaseView {
 
 
     @Override
-    protected int attachLayoutRes() {
-        return R.layout.fragment_message;
-    }
-
-    @Override
-    protected void initInjector() {
+    public void showLoading(String msg) {
 
     }
 
     @Override
-    protected void initViews() {
+    public void hideLoading() {
 
     }
 
     @Override
-    protected void updateViews(boolean isRefresh) {
+    public void showNetError(String msg) {
+
+    }
+
+    @Override
+    public void showNetError(String msg, View.OnClickListener onClickListener) {
 
     }
 }

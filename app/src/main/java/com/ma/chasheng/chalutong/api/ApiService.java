@@ -4,6 +4,7 @@ import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseHttpResult;
 import com.ma.chasheng.chalutong.model.News;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

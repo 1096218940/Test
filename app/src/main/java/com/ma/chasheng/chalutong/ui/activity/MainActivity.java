@@ -16,6 +16,7 @@ import com.ma.chasheng.chalutong.R;
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseActivity;
 import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
+import com.ma.chasheng.chalutong.ui.fragment.OrderFragment;
 import com.ma.chasheng.chalutong.ui.fragment.home.HomeFragment;
 import com.ma.chasheng.chalutong.utils.BuilderManger;
 import com.ma.chasheng.chalutong.utils.ToastUtils;
@@ -32,13 +33,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.rv_news_list)
-    RecyclerView mRecyclerview;
+
     private BoomMenuButton bmb;
-
-    private RecommendListAdapter adapter;
-    private List<RecommendListBean.ResultBean> dataList;
-
+    private HomeFragment homeFragment;
 
 
     @Override
@@ -61,12 +58,6 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
         initBmb();
 
-
-
-        dataList=new ArrayList<>();
-        adapter=new RecommendListAdapter(R.layout.item_home_list,dataList);
-        mRecyclerview.setAdapter(adapter);
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initBmb() {
@@ -83,10 +74,11 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
             public void onClicked(int index, BoomButton boomButton) {
                 switch (index) {
                     case 0:
-                        addFragment(R.id.include,new HomeFragment(),"home");
+                        showNewsFragment();
                         ToastUtils.showToast(index + "T");
                         break;
                     case 1:
+                        addFragment(R.id.container_main,new OrderFragment(),"order");
                         ToastUtils.showToast(index + "T");
                         break;
                     case 2:
@@ -138,6 +130,12 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
     }
 
+    private void showNewsFragment() {
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
+        }
+        showContentFragment(homeFragment, R.id.container_main);
+    }
 
     @Override
     public void onBackPressed() {
@@ -179,6 +177,7 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

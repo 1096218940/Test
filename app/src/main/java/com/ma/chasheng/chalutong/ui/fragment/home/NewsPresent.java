@@ -11,8 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
-import rx.Subscriber;
+
 
 
 /**
@@ -44,32 +43,7 @@ public class NewsPresent extends IBasePresenter<NewsView> {
                         return news.getNewslist();
                     }
                 }).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subject<List<News.NewslistBean>>() {
-                    @Override
-                    public boolean hasObservers() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasThrowable() {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean hasComplete() {
-                        return false;
-                    }
-
-                    @Override
-                    public Throwable getThrowable() {
-                        return null;
-                    }
-
-                    @Override
-                    protected void subscribeActual(Observer<? super List<News.NewslistBean>> observer) {
-
-                    }
-
+                .subscribe(new Observer<List<News.NewslistBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -77,7 +51,6 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
                     @Override
                     public void onNext(List<News.NewslistBean> newslistBeen) {
-
                         if (page==1){
                             getmIBaseView().refresh(newslistBeen);
                         }else {
@@ -87,7 +60,6 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
                     @Override
                     public void onError(Throwable e) {
-
                         getmIBaseView().showNetError("网络错误");
                     }
 
@@ -96,6 +68,7 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
                     }
                 });
+
 
 
 
