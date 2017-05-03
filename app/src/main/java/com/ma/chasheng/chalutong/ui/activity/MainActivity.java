@@ -18,6 +18,7 @@ import com.ma.chasheng.chalutong.base.BaseActivity;
 import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
 import com.ma.chasheng.chalutong.ui.fragment.OrderFragment;
 import com.ma.chasheng.chalutong.ui.fragment.home.HomeFragment;
+import com.ma.chasheng.chalutong.ui.fragment.message.MessageFragment;
 import com.ma.chasheng.chalutong.utils.BuilderManger;
 import com.ma.chasheng.chalutong.utils.ToastUtils;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
                         ToastUtils.showToast(index + "T");
                         break;
                     case 1:
-                        addFragment(R.id.container_main,new OrderFragment(),"order");
+                        addFragment(R.id.container_main,new MessageFragment(),"order");
                         ToastUtils.showToast(index + "T");
                         break;
                     case 2:

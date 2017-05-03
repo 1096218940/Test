@@ -1,20 +1,17 @@
-<android.support.v4.widget.SwipeRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_refresh"
+    android:id="@+id/swipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:orientation="vertical"
+    >
 
-    <FrameLayout
+
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/rv_message_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"></com.jude.easyrecyclerview.EasyRecyclerView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_news_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
-        <include layout="@layout/layout_common_empty"/>
-    </FrameLayout>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
