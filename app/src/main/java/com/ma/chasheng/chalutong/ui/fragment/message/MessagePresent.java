@@ -1,6 +1,7 @@
 package com.ma.chasheng.chalutong.ui.fragment.message;
 
 import com.ma.chasheng.chalutong.api.ApiService;
+import com.ma.chasheng.chalutong.base.CommonTransformer;
 import com.ma.chasheng.chalutong.base.IBasePresenter;
 import com.ma.chasheng.chalutong.model.GirlsEntity;
 

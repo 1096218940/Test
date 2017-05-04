@@ -1,8 +1,14 @@
 package com.ma.chasheng.chalutong.ui.fragment.home;
 
+import android.content.Context;
+
+import com.ma.chasheng.chalutong.MyApp;
 import com.ma.chasheng.chalutong.api.ApiService;
+import com.ma.chasheng.chalutong.base.CommonSubscriber;
+import com.ma.chasheng.chalutong.base.CommonTransformer;
 import com.ma.chasheng.chalutong.base.IBasePresenter;
 import com.ma.chasheng.chalutong.model.News;
+import com.ma.chasheng.chalutong.utils.RxUtil;
 
 import java.util.List;
 
@@ -22,6 +28,7 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
     public static final String APIKEY = "bc880d0a8dd61c0c8af01647c1c97684";
 
+
     @Override
     public void attachView(NewsView ibaseView) {
         super.attachView(ibaseView);
@@ -36,6 +43,7 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
         NewsService.createApi(ApiService.class)
                 .getNewsDatas(APIKEY, "10", page)
+
                 .subscribeOn(Schedulers.io())
                 .map(new Function<News, List<News.NewslistBean>>() {
                     @Override
