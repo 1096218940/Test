@@ -43,7 +43,6 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
         NewsService.createApi(ApiService.class)
                 .getNewsDatas(APIKEY, "10", page)
-
                 .subscribeOn(Schedulers.io())
                 .map(new Function<News, List<News.NewslistBean>>() {
                     @Override
@@ -76,9 +75,6 @@ public class NewsPresent extends IBasePresenter<NewsView> {
 
                     }
                 });
-
-
-
 
 
     }
