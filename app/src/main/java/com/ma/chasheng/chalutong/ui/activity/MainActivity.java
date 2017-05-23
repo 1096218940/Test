@@ -1,5 +1,6 @@
 package com.ma.chasheng.chalutong.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -19,25 +20,17 @@ import com.ma.chasheng.chalutong.ui.adapter.RecommendListAdapter;
 import com.ma.chasheng.chalutong.ui.fragment.OrderFragment;
 import com.ma.chasheng.chalutong.ui.fragment.home.HomeFragment;
 import com.ma.chasheng.chalutong.ui.fragment.message.MessageFragment;
-import com.ma.chasheng.chalutong.utils.BuilderManger;
-import com.ma.chasheng.chalutong.utils.ToastUtils;
-import com.nightonke.boommenu.BoomButtons.BoomButton;
-import com.nightonke.boommenu.BoomButtons.TextInsideCircleButton;
-import com.nightonke.boommenu.BoomMenuButton;
-import com.nightonke.boommenu.OnBoomListener;
+import com.ma.chasheng.chalutong.ui.fragment.video.VideoFragment;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 public class MainActivity extends BaseActivity implements  NavigationView.OnNavigationItemSelectedListener {
-
-
-    private BoomMenuButton bmb;
-    private HomeFragment homeFragment;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,89 +50,17 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initBmb();
+
 
     }
 
-    private void initBmb() {
-        bmb = (BoomMenuButton) findViewById(R.id.bmb);
-        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
-            TextInsideCircleButton.Builder builder = new TextInsideCircleButton.Builder()
-                    .normalImageRes(BuilderManger.getImageResource())
-                    .normalText(BuilderManger.getTextResource());
-            bmb.addBuilder(builder);
-        }
 
-        bmb.setOnBoomListener(new OnBoomListener() {
-            @Override
-            public void onClicked(int index, BoomButton boomButton) {
-                switch (index) {
-                    case 0:
-                        showNewsFragment();
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 1:
-                        addFragment(R.id.container_main,new MessageFragment(),"order");
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 2:
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 3:
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 4:
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 5:
-                        ToastUtils.showToast(index + "T");
-                        break;
-                    case 6:
-                        ToastUtils.showToast(index + "T");
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onBackgroundClick() {
-
-            }
-
-            @Override
-            public void onBoomWillHide() {
-
-            }
-
-            @Override
-            public void onBoomDidHide() {
-
-            }
-
-            @Override
-            public void onBoomWillShow() {
-
-            }
-
-            @Override
-            public void onBoomDidShow() {
-
-            }
-        });
-
-    }
-
-    private void showNewsFragment() {
-        if (homeFragment == null) {
-            homeFragment = new HomeFragment();
-        }
-        showContentFragment(homeFragment, R.id.container_main);
-    }
 
     @Override
     public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -178,11 +99,11 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-
+            replaceFragment(R.id.container_main,new MessageFragment(),"order");
         } else if (id == R.id.nav_gallery) {
-
+            replaceFragment(R.id.container_main,new VideoFragment(),"video");
         } else if (id == R.id.nav_slideshow) {
-
+            replaceFragment(R.id.container_main,new HomeFragment(),"home");
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -196,4 +117,10 @@ public class MainActivity extends BaseActivity implements  NavigationView.OnNavi
         return true;
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 }

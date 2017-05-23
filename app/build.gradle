@@ -13,7 +13,7 @@ android {
     }
     defaultConfig {
         applicationId "com.ma.chasheng.chalutong"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -42,7 +42,7 @@ dependencies {
 
 
 
-
+    compile 'fm.jiecao:jiecaovideoplayer:5.5.4'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:8.2.1'
@@ -61,7 +61,6 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.hss01248:PhotoOut:1.0.0'
-    compile 'com.nightonke:boommenu:2.0.9'
     compile 'com.android.support:percent:24.2.1'
     compile 'com.jude:easyrecyclerview:4.2.6'
     testCompile 'junit:junit:4.12'

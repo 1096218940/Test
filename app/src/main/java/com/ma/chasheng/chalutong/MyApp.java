@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.ma.chasheng.chalutong.utils.ToastUtils;
 
+import io.realm.Realm;
+
 /**
  * Created by mapingan
  * on 2017/4/25 0025.
@@ -19,6 +21,7 @@ public class MyApp extends Application {
         super.onCreate();
         mContext=getApplicationContext();
         ToastUtils.init(mContext);
+        Realm.init(this);
     }
 
 
