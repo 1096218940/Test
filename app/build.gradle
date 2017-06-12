@@ -63,6 +63,7 @@ dependencies {
     compile 'com.github.hss01248:PhotoOut:1.0.0'
     compile 'com.android.support:percent:24.2.1'
     compile 'com.jude:easyrecyclerview:4.2.6'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     apt 'com.google.dagger:dagger-compiler:2.10'

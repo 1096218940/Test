@@ -15,14 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.SplashActivity"></activity>
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.SplashActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
@@ -34,7 +28,19 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/customTheme" />
-        <activity android:name=".ui.activity.RecyclerActivity"></activity>
+        <activity android:name=".ui.activity.RecyclerActivity" />
+        <activity android:name=".rxjava.LoginRxActivity" />
+        <activity android:name=".rxjava.VerificationActivity"></activity>
+        <activity android:name=".rxjava.SearchActivity">
+
+        </activity>
+        <activity android:name=".ui.activity.Kr_36Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

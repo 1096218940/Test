@@ -1,5 +1,6 @@
 package com.ma.chasheng.chalutong.api;
 
+import com.ma.chasheng.chalutong.api.bean.Kr36Bean;
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.base.BaseHttpResult;
 import com.ma.chasheng.chalutong.model.GirlsEntity;
@@ -29,4 +30,12 @@ public interface ApiService {
 
     @GET("data/福利/{num}/{page}")
     Observable<GirlsEntity> getPictures(@Path("num") int num, @Path("page") int page);
+
+    @GET("data/福利/{num}/{page}")
+    Observable<String> textChanges(@Path("num")String str);
+
+    @GET("napi/discover")
+    Observable<Kr36Bean> getData();
+
+
 }
