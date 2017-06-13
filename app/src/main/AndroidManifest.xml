@@ -16,11 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SplashActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
@@ -36,6 +32,15 @@
             android:theme="@style/customTheme" />
         <activity android:name=".ui.activity.RecyclerActivity" />
         <activity android:name=".ui.activity.RxBingActivity"></activity>
+
+        <activity android:name=".ui.activity.Kr_36Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

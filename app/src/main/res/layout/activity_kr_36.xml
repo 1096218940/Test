@@ -19,7 +19,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,13 +41,18 @@
                     android:text="精品栏目"
                     android:textSize="18sp" />
 
-                <com.bigkoo.convenientbanner.ConvenientBanner
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/convenientBanner"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    app:canLoop="true"
-                />
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
 
             </LinearLayout>
 
@@ -64,10 +70,18 @@
                     android:text="本周TOP10"
                     android:textSize="18sp" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_top10"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content"
+                    android:descendantFocusability="blocksDescendants">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_top10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout

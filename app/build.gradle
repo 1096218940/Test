@@ -32,16 +32,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
-
-
-
-
-
-
-
-
     compile 'fm.jiecao:jiecaovideoplayer:5.5.4'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -62,6 +52,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.hss01248:PhotoOut:1.0.0'
     compile 'com.android.support:percent:24.2.1'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.jude:easyrecyclerview:4.2.6'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'

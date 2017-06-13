@@ -24,6 +24,6 @@ public class GrViewPagerAdapter extends BaseQuickAdapter<Kr36Bean.DataBean.Colum
     protected void convert(BaseViewHolder helper, Kr36Bean.DataBean.ColumnsBean item) {
         Glide.with(mContext).load(item.getCover_thumb()).into((ImageView) helper.getView(R.id.iv_item_viewpager));
         helper.setText(R.id.tv_item_viewpager,item.getName())
-                .setText(R.id.iv_item_viewpager,item.getIntroduction());
+                .setText(R.id.tv_title_item_rv_competitive,item.getIntroduction());
     }
 }

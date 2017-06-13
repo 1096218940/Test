@@ -1,22 +1,32 @@
 package com.ma.chasheng.chalutong.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.ma.chasheng.chalutong.R;
 import com.ma.chasheng.chalutong.api.ApiService;
 import com.ma.chasheng.chalutong.api.bean.Kr36Bean;
-import com.ma.chasheng.chalutong.ui.adapter.BannerHolderView;
+import com.ma.chasheng.chalutong.ui.adapter.AuthorAdapter;
+import com.ma.chasheng.chalutong.ui.adapter.GridViewAdapter;
+import com.ma.chasheng.chalutong.ui.adapter.Top10Adapter;
+import com.ma.chasheng.chalutong.ui.adapter.ViewPagerAdapter;
+import com.ma.chasheng.chalutong.ui.adapter.ZhuantiAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -34,11 +44,30 @@ public class Kr_36Activity extends AppCompatActivity {
     RecyclerView rvZhuanti;
     @BindView(R.id.rv_author)
     RecyclerView rvAuthor;
-    @BindView(R.id.convenientBanner)
-    ConvenientBanner convenientBanner;
 
+
+    private LayoutInflater inflater;
+    /**
+     * 总的页数
+     */
+    private int pageCount;
+    /**
+     * 每一页显示的个数
+     */
+    private int pageSize = 10;
+    /**
+     * 当前显示的是第几页
+     */
+    private int curIndex = 0;
+
+    private List<Kr36Bean.DataBean.ColumnsBean> mDatas =new ArrayList<>();
+
+    private List<View> mPagerList;
 
     public static final String BASE_URL = "https://36kr.com/";
+    @BindView(R.id.viewpager)
+    ViewPager mPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +75,40 @@ public class Kr_36Activity extends AppCompatActivity {
         ButterKnife.bind(this);
         initData();
 
+        //设置圆点
+       // setOvalLayout();
     }
 
+    /**
+     * 设置圆点
+     */
+  /*  public void setOvalLayout() {
+        for (int i = 0; i < pageCount; i++) {
+            mLlDot.addView(inflater.inflate(R.layout.dot, null));
+        }
+        // 默认显示第一页
+        mLlDot.getChildAt(0).findViewById(R.id.v_dot)
+                .setBackgroundResource(R.drawable.dot_selected);
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageSelected(int position) {
+                // 取消圆点选中
+                mLlDot.getChildAt(curIndex)
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.dot_normal);
+                // 圆点选中
+                mLlDot.getChildAt(position)
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.dot_selected);
+                curIndex = position;
+            }
 
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+    }*/
     private void initData() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -78,15 +138,56 @@ public class Kr_36Activity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Kr36Bean.DataBean dataBean) {
-                        convenientBanner.setPages(new CBViewHolderCreator<BannerHolderView>() {
-                            @Override
-                            public BannerHolderView createHolder() {
-                                return new BannerHolderView();
-                            }
-                        },dataBean.getColumns())
-                                //.setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-                                //设置指示器的方向
-                                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
+//                        convenientBanner.setPages(new CBViewHolderCreator<BannerHolderView>() {
+//                            @Override
+//                            public BannerHolderView createHolder() {
+//                                return new BannerHolderView();
+//                            }
+//                        },dataBean.getColumns())
+//                                //.setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+//                                //设置指示器的方向
+//                                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
+
+                        mDatas.addAll(dataBean.getColumns());
+                        inflater = LayoutInflater.from(Kr_36Activity.this);
+                        //总的页数=总数/每页数量，并取整
+                        pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);
+                        mPagerList = new ArrayList<View>();
+                        for (int i = 0; i < pageCount; i++) {
+                            // 每个页面都是inflate出一个新实例
+
+                           // GridView gridView = (GridView) inflater.inflate(R.layout.viewpage_item, mPager, false);
+                            GridView gridView =new GridView(Kr_36Activity.this);
+                            gridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,220));
+                            gridView.setAdapter(new GridViewAdapter(Kr_36Activity.this, mDatas, i, pageSize));
+                            mPagerList.add(gridView);
+
+                            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    int pos = position + curIndex * pageSize;
+                                    Toast.makeText(Kr_36Activity.this, mDatas.get(pos).getName(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        //设置适配器
+                        mPager.setAdapter(new ViewPagerAdapter(mPagerList));
+
+
+
+                        rvTop10.setAdapter(new Top10Adapter(R.layout.item_rv_top10, dataBean.getTopNews()));
+                        rvTop10.setNestedScrollingEnabled(false);
+                        rvTop10.setLayoutManager(new LinearLayoutManager(Kr_36Activity.this));
+
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Kr_36Activity.this);
+                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        rvZhuanti.setAdapter(new ZhuantiAdapter(R.layout.item_rv_zhuanti, dataBean.getMonographics()));
+                        rvZhuanti.setNestedScrollingEnabled(false);
+                        rvZhuanti.setLayoutManager(linearLayoutManager);
+
+                        rvAuthor.setAdapter(new AuthorAdapter(R.layout.item_author, dataBean.getTopWriters()));
+                        rvAuthor.setNestedScrollingEnabled(false);
+                        rvAuthor.setLayoutManager(new LinearLayoutManager(Kr_36Activity.this));
                     }
 
                     @Override
@@ -99,7 +200,6 @@ public class Kr_36Activity extends AppCompatActivity {
 
                     }
                 });
-
 
 
     }
