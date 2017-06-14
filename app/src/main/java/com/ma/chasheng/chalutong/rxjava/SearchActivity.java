@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.ma.chasheng.chalutong.R;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -41,19 +43,8 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
 
                 /**
                  * a.可能会导致很多没有意义的请求，耗费用户的流量，因为没更改一次就会访问网络，而且只是最后输入的关键字是有用的
@@ -62,61 +53,45 @@ public class SearchActivity extends AppCompatActivity {
                  * 例如：用户开始输入“AB”这个时候出现了两个请求，一个是A关键字，一个是AB关键字。如果因为一些原因，"AB"先返回数据，
                  * 之后“A”在返回，这样，A的结果就是覆盖AB的请求结果，从而导致搜索结果不正确。
                  */
-                search(s.toString().trim());//请求搜索接口，成功后把结果显示在界面上
-            }
-        });
-    }
-
-    private void search(String trim) {
-//        NewsService.createApi(ApiService.class)
-//                .textChanges(trim)
 
 
-        Observable
-
-                .just("123")
+        RxTextView.textChanges(editText)
                 .debounce(200, TimeUnit.MICROSECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .filter(new Predicate<String>() {
+                //如果没有输入过滤一下
+                .filter(new Predicate<CharSequence>() {
                     @Override
-                    public boolean test(String s) throws Exception {
-                        return s.toString().trim().length() > 0;
+                    public boolean test(CharSequence charSequence) throws Exception {
+                        return charSequence.toString().trim().length()>0;
                     }
-                }).switchMap(new Function<String, ObservableSource<List<String>>>() {
-            @Override
-            public ObservableSource<List<String>> apply(String s) throws Exception {
-                Log.e(TAG, s);
-                List<String> list = new ArrayList<String>();
-                list.add("abc");
-                list.add("ada");
-
-                return Observable.just(list);
-            }
-        })
-//                .flatMap(new Function<String, ObservableSource<List<String>>>() {
-//                    @Override
-//                    public ObservableSource<List<String>> apply(String s) throws Exception {
-//                        List<String> list=new ArrayList<String>();
-//                        list.add("abc");
-//                        list.add("ada");
-//
-//                        return Observable.just(list);
-//                    }
-//                })
+                })
+                .flatMap(new Function<CharSequence, ObservableSource<List<String>>>() {
+                    @Override
+                    public ObservableSource<List<String>> apply(CharSequence charSequence) throws Exception {
+                        //网络请求
+                        Log.e(TAG,"flatmap"+charSequence);
+                        List<String> list=new ArrayList<String>();
+                        list.add("abc");
+                        list.add("adc");
+                        list.add("soft");
+                        return Observable.just(list);
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        Log.e(TAG, "list" + strings);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
+                        //显示结果
+                        Log.e(TAG,strings+"!");
                     }
                 });
+
     }
+
+
+
+
 
 
 }

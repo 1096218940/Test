@@ -55,17 +55,8 @@ public class Kr_36Activity extends AppCompatActivity {
     private List<View> mPagerList;
     private List<Kr36Bean.DataBean.ColumnsBean> mData;
     private LayoutInflater inflater;
-    /**
-     * 总的页数
-     */
     private int pageCount;
-    /**
-     * 每一页显示的个数
-     */
     private int pageSize = 6;
-    /**
-     * 当前显示的是第几页
-     */
     private int curIndex = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
