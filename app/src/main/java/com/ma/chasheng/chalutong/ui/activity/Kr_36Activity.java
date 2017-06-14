@@ -5,11 +5,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -37,6 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Kr_36Activity extends AppCompatActivity {
 
+    public static final String TAG="Kr_36Activity";
+    public static final String BASE_URL = "https://36kr.com/";
 
     @BindView(R.id.rv_top10)
     RecyclerView rvTop10;
@@ -44,8 +47,13 @@ public class Kr_36Activity extends AppCompatActivity {
     RecyclerView rvZhuanti;
     @BindView(R.id.rv_author)
     RecyclerView rvAuthor;
+    @BindView(R.id.ll_dot)
+    LinearLayout mLlDot;
+    @BindView(R.id.viewpager)
+    ViewPager mPager;
 
-
+    private List<View> mPagerList;
+    private List<Kr36Bean.DataBean.ColumnsBean> mData;
     private LayoutInflater inflater;
     /**
      * 总的页数
@@ -54,61 +62,21 @@ public class Kr_36Activity extends AppCompatActivity {
     /**
      * 每一页显示的个数
      */
-    private int pageSize = 10;
+    private int pageSize = 6;
     /**
      * 当前显示的是第几页
      */
     private int curIndex = 0;
-
-    private List<Kr36Bean.DataBean.ColumnsBean> mDatas =new ArrayList<>();
-
-    private List<View> mPagerList;
-
-    public static final String BASE_URL = "https://36kr.com/";
-    @BindView(R.id.viewpager)
-    ViewPager mPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kr_36);
         ButterKnife.bind(this);
+        //初始化数据源
         initData();
 
-        //设置圆点
-       // setOvalLayout();
     }
 
-    /**
-     * 设置圆点
-     */
-  /*  public void setOvalLayout() {
-        for (int i = 0; i < pageCount; i++) {
-            mLlDot.addView(inflater.inflate(R.layout.dot, null));
-        }
-        // 默认显示第一页
-        mLlDot.getChildAt(0).findViewById(R.id.v_dot)
-                .setBackgroundResource(R.drawable.dot_selected);
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageSelected(int position) {
-                // 取消圆点选中
-                mLlDot.getChildAt(curIndex)
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.dot_normal);
-                // 圆点选中
-                mLlDot.getChildAt(position)
-                        .findViewById(R.id.v_dot)
-                        .setBackgroundResource(R.drawable.dot_selected);
-                curIndex = position;
-            }
-
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
-    }*/
     private void initData() {
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -138,42 +106,32 @@ public class Kr_36Activity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Kr36Bean.DataBean dataBean) {
-//                        convenientBanner.setPages(new CBViewHolderCreator<BannerHolderView>() {
-//                            @Override
-//                            public BannerHolderView createHolder() {
-//                                return new BannerHolderView();
-//                            }
-//                        },dataBean.getColumns())
-//                                //.setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
-//                                //设置指示器的方向
-//                                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
 
-                        mDatas.addAll(dataBean.getColumns());
+                        mData=new ArrayList<Kr36Bean.DataBean.ColumnsBean>();
+                        mData.addAll(dataBean.getColumns());
+                        Log.e(TAG,mData.size()+"!");
                         inflater = LayoutInflater.from(Kr_36Activity.this);
                         //总的页数=总数/每页数量，并取整
-                        pageCount = (int) Math.ceil(mDatas.size() * 1.0 / pageSize);
+                        pageCount = (int) Math.ceil(mData.size() * 1.0 / pageSize);
                         mPagerList = new ArrayList<View>();
                         for (int i = 0; i < pageCount; i++) {
-                            // 每个页面都是inflate出一个新实例
-
-                           // GridView gridView = (GridView) inflater.inflate(R.layout.viewpage_item, mPager, false);
-                            GridView gridView =new GridView(Kr_36Activity.this);
-                            gridView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,220));
-                            gridView.setAdapter(new GridViewAdapter(Kr_36Activity.this, mDatas, i, pageSize));
+                            //每个页面都是inflate出一个新实例
+                            GridView gridView = (GridView) inflater.inflate(R.layout.gridview, mPager, false);
+                            gridView.setAdapter(new GridViewAdapter(Kr_36Activity.this, mData, i, pageSize));
                             mPagerList.add(gridView);
 
                             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                     int pos = position + curIndex * pageSize;
-                                    Toast.makeText(Kr_36Activity.this, mDatas.get(pos).getName(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Kr_36Activity.this, mData.get(pos).getName(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                         //设置适配器
                         mPager.setAdapter(new ViewPagerAdapter(mPagerList));
-
-
+                        //设置圆点
+                        setOvalLayout();
 
                         rvTop10.setAdapter(new Top10Adapter(R.layout.item_rv_top10, dataBean.getTopNews()));
                         rvTop10.setNestedScrollingEnabled(false);
@@ -200,7 +158,36 @@ public class Kr_36Activity extends AppCompatActivity {
 
                     }
                 });
+    }
 
+    /**
+     * 设置圆点
+     */
+    public void setOvalLayout() {
+        for (int i = 0; i < pageCount; i++) {
+            mLlDot.addView(inflater.inflate(R.layout.dot, null));
+        }
+        // 默认显示第一页
+        mLlDot.getChildAt(0).findViewById(R.id.v_dot)
+                .setBackgroundResource(R.drawable.dot_selected);
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageSelected(int position) {
+                // 取消圆点选中
+                mLlDot.getChildAt(curIndex)
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.dot_normal);
+                // 圆点选中
+                mLlDot.getChildAt(position)
+                        .findViewById(R.id.v_dot)
+                        .setBackgroundResource(R.drawable.dot_selected);
+                curIndex = position;
+            }
 
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
     }
 }

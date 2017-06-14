@@ -15,10 +15,9 @@ import com.ma.chasheng.chalutong.api.bean.Kr36Bean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/6/13 0013.
+ * Created by lijuan on 2016/9/12.
  */
-
-public class GridViewAdapter  extends BaseAdapter {
+public class GridViewAdapter extends BaseAdapter {
     private List<Kr36Bean.DataBean.ColumnsBean> mDatas;
     private LayoutInflater inflater;
     /**
@@ -32,16 +31,17 @@ public class GridViewAdapter  extends BaseAdapter {
     private Context context;
 
     public GridViewAdapter(Context context, List<Kr36Bean.DataBean.ColumnsBean> mDatas, int curIndex, int pageSize) {
-
-        this.context=context;
         inflater = LayoutInflater.from(context);
+        this.context=context;
         this.mDatas = mDatas;
         this.curIndex = curIndex;
         this.pageSize = pageSize;
     }
 
     /**
-     * 先判断数据集的大小是否足够显示满本页,如果够，则直接返回每一页显示的最大条目个数pageSize,如果不够，则有几项就返回几,(也就是最后一页的时候就显示剩余item)
+     * 先判断数据集的大小是否足够显示满本页？mDatas.size() > (curIndex+1)*pageSize,
+     * 如果够，则直接返回每一页显示的最大条目个数pageSize,
+     * 如果不够，则有几项返回几,(mDatas.size() - curIndex * pageSize);(也就是最后一页的时候就显示剩余item)
      */
     @Override
     public int getCount() {
@@ -63,27 +63,29 @@ public class GridViewAdapter  extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_viewpager, parent, false);
+            convertView = inflater.inflate(R.layout.item_gridview, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.tv = (TextView) convertView.findViewById(R.id.tv_item_viewpager);
-            viewHolder.iv = (ImageView) convertView.findViewById(R.id.iv_item_viewpager);
+            viewHolder.tv = (TextView) convertView.findViewById(R.id.textView);
+            viewHolder.iv = (ImageView) convertView.findViewById(R.id.imageView);
+            viewHolder.tv2= (TextView) convertView.findViewById(R.id.tv_title_item_rv_competitive);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         /**
-         * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize
+         * 在给View绑定显示的数据时，计算正确的position = position + curIndex * pageSize，
          */
         int pos = position + curIndex * pageSize;
         viewHolder.tv.setText(mDatas.get(pos).getName());
-        Glide.with(context).load(mDatas.get(pos).getCover()).into( viewHolder.iv);
-       // viewHolder.iv.setImageResource(mDatas.get(pos).iconRes);
+        viewHolder.tv2.setText(mDatas.get(pos).getIntroduction());
+        Glide.with(context).load(mDatas.get(pos).getCover()).into(viewHolder.iv);
+//        viewHolder.iv.setImageResource(mDatas.get(pos).iconRes);
         return convertView;
     }
 
 
     class ViewHolder {
-        public TextView tv;
+        public TextView tv,tv2;
         public ImageView iv;
     }
 }
