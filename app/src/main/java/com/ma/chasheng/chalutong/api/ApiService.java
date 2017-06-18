@@ -1,6 +1,7 @@
 package com.ma.chasheng.chalutong.api;
 
 import com.ma.chasheng.chalutong.api.bean.BaseBean;
+import com.ma.chasheng.chalutong.api.bean.Course;
 import com.ma.chasheng.chalutong.api.bean.Kr36Bean;
 import com.ma.chasheng.chalutong.api.bean.RecommendListBean;
 import com.ma.chasheng.chalutong.api.bean.UserBean;
@@ -8,6 +9,8 @@ import com.ma.chasheng.chalutong.api.bean.UserParam;
 import com.ma.chasheng.chalutong.base.BaseHttpResult;
 import com.ma.chasheng.chalutong.model.GirlsEntity;
 import com.ma.chasheng.chalutong.model.News;
+
+import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -49,4 +52,7 @@ public interface ApiService {
     @POST
     Observable<BaseBean> login(@Body UserParam param);
 
+
+    @GET("")
+    Observable<List<Course>> getCar();
 }
